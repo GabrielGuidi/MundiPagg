@@ -1,0 +1,72 @@
+{
+  "numero_pedido": "OR1234",
+  "comprador": {
+    "aniversario": "1991-05-20T00:00:00",
+    "documento": "12345678900",
+    "email": "fulano@gmail.com",
+    "telefone": "552122225555",
+    "celular": "5521999995555",
+    "nome": "Fulano Silva",
+    "tipo": "pessoa_fisica",
+    "endereco": {
+      "cidade": "Rio de Janeiro",
+      "complemento": "Apto 1011",
+      "pais": "Brazil",
+      "bairro": "Centro",
+      "numero": "123",
+      "estado": "RJ",
+      "logradouro": "Rua Souza",
+      "cep": "23021130"
+    }
+  },
+  "pagamento": {
+    "valor": 210.00,
+    "parcelas": "5",
+    "endereco cobranca": {
+      "cidade": "Rio de Janeiro",
+      "complemento": "Apto 1011",
+      "pais": "Brazil",
+      "bairro": "Centro",
+      "numero": "123",
+      "estado": "RJ",
+      "logradouro": "Rua Souza",
+      "cep": "23021130"
+    },
+    "cartao": {
+      "bandeira": "Visa",
+      "numero cartao": "4000000000000010",
+      "mes_vencimento": "10",
+      "ano vencimento": "2022",
+      "nome_cartao": "FULANO SILVA",
+      "cvv": "321"
+    }
+  },
+  "entrega": {
+    "endereco entrega": {
+      "cidade": "Rio de Janeiro",
+      "complemento": "Apto 1011",
+      "pais": "Brazil",
+      "bairro": "Centro",
+      "numero": "123",
+      "estado": "RJ",
+      "logradouro": "Rua Souza",
+      "cep": "23021130"
+    },
+    "frete": 10.00,
+    "shipping company": "Correios"
+  },
+  "carriniho": {
+    "items": [
+      {
+        "produto": "Discos Vinil",
+        "quantidade": 10,
+        "valor unit": 10.00
+      },
+      {
+        "produto": "Toca Viniil",
+        "quantidade": 1,
+        "valor unit": 100.00
+      }
+    ]
+  }
+}
