@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace MundiPagg
 {
@@ -22,13 +19,36 @@ namespace MundiPagg
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "MundiPagg",
+                        Version = "v1",
+                        Description = "API de transformação de requisições (pagamento de cartão de crédito) e processamento assíncrono.",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Gabriel Guidi",
+                            Url = new Uri("https://github.com/GabrielGuidi/MundiPagg")
+                        }
+                    });
+
+                var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var applicationName = PlatformServices.Default.Application.ApplicationName;
+                var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
+
+                if (File.Exists(xmlDocumentPath))
+                {
+                    c.IncludeXmlComments(xmlDocumentPath);
+                }
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -41,6 +61,13 @@ namespace MundiPagg
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MundiPagg.Api V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
