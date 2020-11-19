@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Orders\Interfaces\IRepositories\" />
+    <Folder Include="Orders\Interfaces\IServices\" />
+  </ItemGroup>
+
 </Project>

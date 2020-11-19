@@ -4,14 +4,14 @@
     mundiapp:
       image: gabrielguidi/mundiapp
       build:
-        context: ./MundiPagg
+        context: .
       networks: 
         - net
       ports:
         - 32771:443
         - 32770:80
 
-    rabbit:
+    rabbitmq:
       image: "rabbitmq:3-management"
       environment:
         RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"

@@ -22,7 +22,7 @@
   "pagamento": {
     "valor": 210.00,
     "parcelas": "5",
-    "endereco cobranca": {
+    "endereco_cobranca": {
       "cidade": "Rio de Janeiro",
       "complemento": "Apto 1011",
       "pais": "Brazil",
@@ -34,15 +34,15 @@
     },
     "cartao": {
       "bandeira": "Visa",
-      "numero cartao": "4000000000000010",
+      "numero_cartao": "4000000000000010",
       "mes_vencimento": "10",
-      "ano vencimento": "2022",
+      "ano_vencimento": "2022",
       "nome_cartao": "FULANO SILVA",
       "cvv": "321"
     }
   },
   "entrega": {
-    "endereco entrega": {
+    "endereco_entrega": {
       "cidade": "Rio de Janeiro",
       "complemento": "Apto 1011",
       "pais": "Brazil",
@@ -53,19 +53,19 @@
       "cep": "23021130"
     },
     "frete": 10.00,
-    "shipping company": "Correios"
+    "shipping_company": "Correios"
   },
-  "carriniho": {
+  "carrinho": {
     "items": [
       {
         "produto": "Discos Vinil",
         "quantidade": 10,
-        "valor unit": 10.00
+        "valor_unit": 10.00
       },
       {
-        "produto": "Toca Viniil",
+        "produto": "Toca Vinil",
         "quantidade": 1,
-        "valor unit": 100.00
+        "valor_unit": 100.00
       }
     ]
   }

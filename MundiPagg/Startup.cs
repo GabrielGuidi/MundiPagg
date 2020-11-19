@@ -5,6 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using MundiPagg.AppService.OrderApplicationServices;
+using MundiPagg.AppService.OrderApplicationServices.Interfaces;
+using MundiPagg.Domain.CreateOrders.Interfaces;
+using MundiPagg.Domain.CreateOrders.Services;
+using MundiPagg.Infra.Orders.Brokers;
+using MundiPagg.Infra.Orders.Repositories;
+using MundiPagg.Infra.Shared;
+using MundiPagg.Infra.Shared.Interfaces;
 using System;
 using System.IO;
 
@@ -22,6 +30,12 @@ namespace MundiPagg
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped(typeof(IOrderAppService), typeof(OrderAppService));
+            services.AddScoped(typeof(IOrderService), typeof(OrderService));
+            services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+            services.AddScoped(typeof(IOrderBroker), typeof(OrderBroker));
+            services.AddScoped(typeof(IMessageBroker), typeof(MessageBroker));
 
             services.AddSwaggerGen(c =>
             {

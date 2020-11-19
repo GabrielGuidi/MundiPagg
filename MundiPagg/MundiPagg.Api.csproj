@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\MundiPagg.AppService\MundiPagg.AppService.csproj" />
+    <ProjectReference Include="..\MundiPagg.Infra\MundiPagg.Infra.csproj" />
   </ItemGroup>
 
 
