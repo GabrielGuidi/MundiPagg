@@ -2,6 +2,6 @@
 {
     public interface IMessageBroker
     {
-        void SendMessage(string message, string exchange, string routingKey);
+        void SendMessage(string message, string exchange, string routingKey, string exchangeResponse = null, string id = null);
     }
 }

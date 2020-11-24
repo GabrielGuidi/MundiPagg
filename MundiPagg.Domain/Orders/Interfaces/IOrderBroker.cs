@@ -2,6 +2,6 @@
 {
     public interface IOrderBroker
     {
-        void SendOrderMessage(string json);
+        void SendOrderMessage(string json, string id);
     }
 }

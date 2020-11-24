@@ -7,7 +7,7 @@ namespace MundiPagg.Infra.Shared
 {
     public class MessageBroker : IMessageBroker
     {
-        private const string hostname = "rabbitmq";
+        private const string hostname = "localhost";
         private const string username = "rabbitmq";
         private const string password = "rabbitmq";
 
@@ -30,18 +30,24 @@ namespace MundiPagg.Infra.Shared
             }
         }
 
-        public void SendMessage(string message, string exchange, string routingKey)
+        public void SendMessage(string message, string exchange, string routingKey, string exchangeResponse = null, string id = null)
         {
             using var connection = _connectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            channel.ExchangeDeclare(exchange: exchange,
-                                    type: ExchangeType.Topic);
+            var props = channel.CreateBasicProperties();
+            props.CorrelationId = id ?? string.Empty;
+            props.ReplyTo = exchangeResponse ?? string.Empty;
+
+            channel.ExchangeDeclare(exchange: exchange, 
+                                    type: ExchangeType.Topic,
+                                    durable: true,
+                                    autoDelete: false);
 
             var body = Encoding.UTF8.GetBytes(message);
             channel.BasicPublish(exchange: exchange,
                                  routingKey: routingKey,
-                                 basicProperties: null,
+                                 basicProperties: props,
                                  body: body);
         }
     }

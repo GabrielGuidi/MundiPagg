@@ -23,17 +23,17 @@ namespace MundiPagg.Domain.CreateOrders.Services
 
             _orderRepository.Insert(order);
 
-            SendMessageByBroker(createOrderJson);
+            SendMessageByBroker(createOrderJson, order.Id.ToString());
 
             return order;
         }
 
-        private void SendMessageByBroker(string json)
+        private void SendMessageByBroker(string json, string id)
         {
             if (string.IsNullOrWhiteSpace(json))
                 throw new ArgumentException("Json can not be null, empty or filler with white spaces!", "json");
 
-            _orderBroker.SendOrderMessage(json);
+            _orderBroker.SendOrderMessage(json, id);
         }
 
         private string TranslateToCreateOrderJson(Order order)
