@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MundiPagg.AppService\MundiPagg.AppService.csproj" />
     <ProjectReference Include="..\MundiPagg.Infra\MundiPagg.Infra.csproj" />
+    <ProjectReference Include="..\MundiPagg.Worker\MundiPagg.Worker.csproj" />
   </ItemGroup>
 
 

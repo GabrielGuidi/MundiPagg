@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MundiPagg.Worker;
 using RabbitMQ.Client;
 
-namespace MundiPagg
+namespace MundiPagg.Worker
 {
     public class Program
     {
@@ -15,10 +13,6 @@ namespace MundiPagg
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<MundiPaggWorker>();
