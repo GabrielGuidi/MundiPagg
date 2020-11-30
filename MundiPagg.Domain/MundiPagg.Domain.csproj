@@ -1,12 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Orders\Interfaces\IRepositories\" />
-    <Folder Include="Orders\Interfaces\IServices\" />
+    <Folder Include="Interfaces\IRepositories\" />
+    <Folder Include="Interfaces\IServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.11.4" />
   </ItemGroup>
 
 </Project>

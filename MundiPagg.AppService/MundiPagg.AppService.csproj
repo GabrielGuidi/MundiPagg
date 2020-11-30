@@ -2,7 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Enums.NET" Version="3.0.3" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MundiPagg.Domain\MundiPagg.Domain.csproj" />

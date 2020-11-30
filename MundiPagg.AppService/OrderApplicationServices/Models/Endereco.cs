@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using MundiPagg.Domain.Orders.Entities.Orders;
+using System;
+using System.Text.Json.Serialization;
 namespace MundiPagg.AppService.Models
 {
     public class Endereco
@@ -26,5 +28,31 @@ namespace MundiPagg.AppService.Models
 
         [JsonPropertyName("cep")]
         public string Cep { get; set; }
+
+        public static explicit operator Address(Endereco endereco)
+        {
+            var address = new Address()
+            {
+                City = endereco.Cidade,
+                Country = ConvertToCountry(endereco.Pais),
+                State = endereco.Estado.ToUpper(),
+                Line2 = endereco.Complemento
+            };
+
+            address.SetZipCode(endereco.Cep);
+            address.SetLine1($"{endereco.Numero}, {endereco.Logradouro}, {endereco.Bairro}");
+
+            return address;
+        }
+
+        private static string ConvertToCountry(string pais)
+        {
+            if (pais.ToUpper() == "BRAZIL")
+            {
+                return "BR";
+            }
+
+            throw new ApplicationException("Can't convert Country!");
+        }
     }
 }

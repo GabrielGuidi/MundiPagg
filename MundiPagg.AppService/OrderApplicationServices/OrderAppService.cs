@@ -1,9 +1,9 @@
 ﻿using MundiPagg.AppService.DataTransfer;
-using MundiPagg.AppService.Models;
 using MundiPagg.AppService.OrderApplicationServices.Interfaces;
-using MundiPagg.Domain.CreateOrders.Entities;
+using MundiPagg.AppService.Shared;
+using MundiPagg.Domain.CreateOrders.Entities.NewOrders;
 using MundiPagg.Domain.CreateOrders.Interfaces;
-using System.Text.Json;
+using MundiPagg.Domain.Orders.Entities.Orders;
 
 namespace MundiPagg.AppService.OrderApplicationServices
 {
@@ -16,14 +16,35 @@ namespace MundiPagg.AppService.OrderApplicationServices
             _orderService = orderService;
         }
 
+        public OrderResponse GetOrder(long id)
+        {
+            Order order = _orderService.GetOrder(id);
+
+            if (order is null)
+                return null;
+
+            return (OrderResponse)order;
+        }
+
+        public OrderResponse GetOrder(string code)
+        {
+            Order order = _orderService.GetOrder(code);
+
+            if (order is null)
+                return null;
+
+            return (OrderResponse)order;
+        }
+
         public OrderResponse CreateNewOrder(OrderRequest orderRequest)
         {
-            var orderModel = JsonSerializer.Deserialize<OrderModel>(orderRequest.Order);
-            var order = (Order)orderModel;
+            var orderModel = TranslateOrder.FromRequest(orderRequest.Order, orderRequest.OrderContent, orderRequest.EventSimulate);
 
-            Order response = _orderService.CreateNewOrder(order);
-            
-            return (OrderResponse)response;
+            var newOrder = (NewOrder)orderModel;
+
+            var order = _orderService.CreateNewOrder(newOrder);
+
+            return (OrderResponse)order;
         }
     }
 }

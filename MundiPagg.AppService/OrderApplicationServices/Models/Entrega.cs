@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using MundiPagg.AppService.Shared;
+using MundiPagg.Domain.CreateOrders.Entities.NewOrders;
+using MundiPagg.Domain.Orders.Entities.Orders;
+using System.Text.Json.Serialization;
 
 namespace MundiPagg.AppService.Models
 {
@@ -12,5 +15,15 @@ namespace MundiPagg.AppService.Models
 
         [JsonPropertyName("shipping_company")]
         public string ShippingCompany { get; set; }
+
+        public static explicit operator NewOrderShipping(Entrega entrega)
+        {
+            return new NewOrderShipping()
+            {
+                Amount = FormatOrderData.ConvertToLong(entrega.Frete),
+                Description = entrega.ShippingCompany,
+                Address = (Address)entrega.EnderecoEntrega
+            };
+        }
     }
 }

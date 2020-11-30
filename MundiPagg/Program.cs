@@ -1,3 +1,4 @@
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,24 +16,25 @@ namespace MundiPagg
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            })
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddHostedService<MundiPaggWorker>();
+                services.AddSingleton(serviceProvider =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddHostedService<MundiPaggWorker>();
-                    services.AddSingleton(serviceProvider =>
+                    return new ConnectionFactory
                     {
-                        return new ConnectionFactory
-                        {
-                            HostName = "localhost",
-                            UserName = "rabbitmq",
-                            Password = "rabbitmq",
-                            VirtualHost = "/",
-                            DispatchConsumersAsync = true
-                        };
-                    });
+                        HostName = "localhost",
+                        UserName = "rabbitmq",
+                        Password = "rabbitmq",
+                        VirtualHost = "/",
+                        DispatchConsumersAsync = true
+                    };
                 });
+            });
     }
 }

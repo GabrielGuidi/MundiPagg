@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,22 +22,17 @@ namespace MundiPagg
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public ILifetimeScope AutofacContainer { get; private set; }
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            services.AddScoped(typeof(IOrderAppService), typeof(OrderAppService));
-            services.AddScoped(typeof(IOrderService), typeof(OrderService));
-            services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
-            services.AddScoped(typeof(IOrderBroker), typeof(OrderBroker));
-            services.AddScoped(typeof(IMessageBroker), typeof(MessageBroker));
 
             services.AddSwaggerGen(c =>
             {
@@ -56,11 +53,25 @@ namespace MundiPagg
                 var applicationName = PlatformServices.Default.Application.ApplicationName;
                 var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
 
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
                 if (File.Exists(xmlDocumentPath))
                 {
                     c.IncludeXmlComments(xmlDocumentPath);
                 }
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<MundiContext>().As<IMundiContext>().InstancePerLifetimeScope();
+
+            builder.RegisterType<OrderAppService>().As<IOrderAppService>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderService>().As<IOrderService>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderBroker>().As<IOrderBroker>().InstancePerLifetimeScope();
+            builder.RegisterType<MessageBroker>().As<IMessageBroker>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>().InstancePerLifetimeScope();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,14 +81,13 @@ namespace MundiPagg
                 app.UseDeveloperExceptionPage();
             }
 
+            AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MundiPagg.Api V1");

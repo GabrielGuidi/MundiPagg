@@ -1,5 +1,5 @@
-﻿using MundiPagg.Domain.CreateOrders.Entities;
-using System;
+﻿using MundiPagg.Domain.CreateOrders.Entities.NewOrders;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace MundiPagg.AppService.Models
@@ -22,9 +22,19 @@ namespace MundiPagg.AppService.Models
         public Carrinho Carrinho { get; set; }
 
         #region [Mapping]
-        public static explicit operator Order(OrderModel orderModel)
+        public static explicit operator NewOrder(OrderModel orderModel)
         {
-            return new Order();
+            var customer = (NewOrderCustomer)orderModel.Comprador;
+            var payments = new NewOrderPayment[] { (NewOrderPayment)orderModel.Pagamento };
+            var items = orderModel.Carrinho.Items.Select(x => (NewOrderItem)x).ToArray();
+
+            var order = new NewOrder(customer, items, payments)
+            {
+                Code = orderModel.NumeroPedido,
+                Shipping = (NewOrderShipping)orderModel.Entrega
+            };
+
+            return order;
         }
         #endregion
     }

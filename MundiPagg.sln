@@ -17,6 +17,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MundiPagg.Tests", "MundiPagg.Tests\MundiPagg.Tests.csproj", "{E67EFF2A-300A-4E48-B5F6-1AA90153CBFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MundiPagg.Worker", "MundiPagg.Worker\MundiPagg.Worker.csproj", "{3068E846-7685-4CEA-9703-8331DC767CA1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{707CC76E-E514-408E-860C-6F560F7E438D} = {707CC76E-E514-408E-860C-6F560F7E438D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

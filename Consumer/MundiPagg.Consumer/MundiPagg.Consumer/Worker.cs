@@ -1,3 +1,4 @@
+using Consumer.Domain.Orders.Interfaces;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -17,10 +18,12 @@ namespace MundiPagg.Consumer
         private const string RequestQueueName = "request_order_queue";
 
         private readonly ILogger<Worker> _logger;
+        private readonly IOrderService _orderService;
 
-        public Worker(ConnectionFactory connectionFactory, ILogger<Worker> logger) : base(connectionFactory, logger)
+        public Worker(ConnectionFactory connectionFactory, ILogger<Worker> logger, IOrderService orderService) : base(connectionFactory, logger)
         {
             _logger = logger;
+            _orderService = orderService;
             var consumer = new AsyncEventingBasicConsumer(Channel);
             consumer.Received += OnEventReceived;
             Channel.BasicConsume(queue: RequestQueueName, autoAck: false, consumer: consumer);
@@ -74,12 +77,9 @@ namespace MundiPagg.Consumer
 
         private string ProcessOrder(string message)
         {
-            var number = new Random().Next(0, 9);
+            string responseMessage =_orderService.CreateOrder(message);
 
-            if (number > 6)
-                throw new Exception("Deu ruim, depois eu trato isso!");
-
-            return message;
+            return responseMessage;
         }
     }
 }

@@ -5,6 +5,6 @@ namespace MundiPagg.AppService.Models
     public class Carrinho
     {
         [JsonPropertyName("items")]
-        public Item[] Items { get; set; }
+        public ModelItem[] Items { get; set; }
     }
 }
