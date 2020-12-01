@@ -1,12 +1,15 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+
 using MundiPagg.AppService.OrderApplicationServices;
 using MundiPagg.AppService.OrderApplicationServices.Interfaces;
 using MundiPagg.Domain.CreateOrders.Interfaces;
@@ -15,7 +18,10 @@ using MundiPagg.Infra.Orders.Brokers;
 using MundiPagg.Infra.Orders.Repositories;
 using MundiPagg.Infra.Shared;
 using MundiPagg.Infra.Shared.Interfaces;
+
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace MundiPagg
@@ -24,12 +30,12 @@ namespace MundiPagg
     {
         public IConfiguration Configuration { get; }
         public ILifetimeScope AutofacContainer { get; private set; }
-        
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -41,7 +47,7 @@ namespace MundiPagg
                     {
                         Title = "MundiPagg",
                         Version = "v1",
-                        Description = "API de transformação de requisições (pagamento de cartão de crédito) e processamento assíncrono.",
+                        Description = "Credit card payment simulator.",
                         Contact = new OpenApiContact
                         {
                             Name = "Gabriel Guidi",
@@ -80,6 +86,19 @@ namespace MundiPagg
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(new CultureInfo("pt-BR")),
+                SupportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("pt-BR")
+                },
+                SupportedUICultures = new List<CultureInfo>
+                {
+                    new CultureInfo("pt-BR")
+                }
+            });
 
             AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 

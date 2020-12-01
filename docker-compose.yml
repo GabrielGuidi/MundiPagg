@@ -2,16 +2,36 @@
   version: "3.8"
   services:
     mundiapp:
+      container_name: mundipagg-app
       image: gabrielguidi/mundiapp
       build:
         context: .
       networks: 
-        - net
+        - mundi-net
+      depends_on:
+        - rabbitmq
+        - mongo
+      restart: unless-stopped
       ports:
         - 32771:443
         - 32770:80
 
+    consumer:
+      container_name: mundipagg-consumer
+      image: gabrielguidi/mundipaggconsumer
+      build:
+        context: .
+        dockerfile: Dockerfile.consumer
+      networks: 
+        - mundi-net
+      depends_on:
+        - rabbitmq
+        - mongo
+        - mundiapp
+      restart: unless-stopped
+
     rabbitmq:
+      container_name: rabbitmq-container
       image: "rabbitmq:3-management"
       environment:
         RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
@@ -22,8 +42,34 @@
         - "15672:15672"
         - "5672:5672"
       networks: 
-        - net
+        - mundi-net
+
+    mongo:
+      container_name: mongo-container
+      image: mongo
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
+      ports:
+        - 27017:27017
+      networks: 
+        - mundi-net
+    
+    mongo-express:
+      container_name: mongo-express-container
+      image: mongo-express
+      restart: always
+      ports:
+        - 8081:8081
+      environment:
+        ME_CONFIG_MONGODB_ADMINUSERNAME: root
+        ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      depends_on:
+        - mongo
+      networks: 
+        - mundi-net
 
   networks: 
-    net:
+    mundi-net:
       driver: bridge

@@ -1,4 +1,5 @@
-﻿using MundiPagg.Infra.Shared.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using MundiPagg.Infra.Shared.Interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Text;
@@ -7,14 +8,19 @@ namespace MundiPagg.Infra.Shared
 {
     public class MessageBroker : IMessageBroker
     {
-        private const string hostname = "localhost";
-        private const string username = "rabbitmq";
-        private const string password = "rabbitmq";
+        private readonly string _hostname;
+        private readonly string _username;
+        private readonly string _password;
 
         private readonly ConnectionFactory _connectionFactory;
 
-        public MessageBroker()
+        public MessageBroker(IConfiguration config)
         {
+            var rabbitMQConfig = config.GetSection("RabbitMQ");
+            _hostname = rabbitMQConfig.GetSection("Hostname").Value;
+            _username = rabbitMQConfig.GetSection("Username").Value;
+            _password = rabbitMQConfig.GetSection("Password").Value;
+            
             _connectionFactory = CreateConnectionFactory();
         }
 
@@ -22,7 +28,7 @@ namespace MundiPagg.Infra.Shared
         {
             try
             {
-                return new ConnectionFactory() { HostName = hostname, UserName = username, Password = password };
+                return new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password };
             }
             catch (Exception error)
             {

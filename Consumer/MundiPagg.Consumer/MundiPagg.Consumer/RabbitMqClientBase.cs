@@ -36,6 +36,8 @@ namespace MundiPagg.Consumer
                 _connection = _connectionFactory.CreateConnection();
             }
 
+            _logger.LogInformation("RabbitMQ connected.");
+
             if (Channel == null || Channel.IsOpen == false)
             {
                 Channel = _connection.CreateModel();
