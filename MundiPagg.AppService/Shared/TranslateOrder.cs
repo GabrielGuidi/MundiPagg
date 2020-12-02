@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace MundiPagg.AppService.Shared
 {
-    internal static class TranslateOrder
+    public class TranslateOrder
     {
         private static Dictionary<OrderContentFormatEnum, Func<string, OrderModel>> _formats;
 
@@ -16,7 +16,7 @@ namespace MundiPagg.AppService.Shared
             _formats = InstantiateFormatsDictonary();
         }
 
-        public static OrderModel FromRequest(string order, OrderContentFormatEnum orderContent, SumulateCardValueEnum eventSimulate)
+        internal static OrderModel FromRequest(string order, OrderContentFormatEnum orderContent, SumulateCardValueEnum eventSimulate)
         {
             var orderModel = _formats[orderContent](order);
             if (eventSimulate != SumulateCardValueEnum.Success)
@@ -36,7 +36,7 @@ namespace MundiPagg.AppService.Shared
             throw new NotImplementedException("Not done yet!");
         }
 
-        private static Dictionary<OrderContentFormatEnum, Func<string, OrderModel>> InstantiateFormatsDictonary()
+        public static Dictionary<OrderContentFormatEnum, Func<string, OrderModel>> InstantiateFormatsDictonary()
         {
             return new Dictionary<OrderContentFormatEnum, Func<string, OrderModel>>()
             {

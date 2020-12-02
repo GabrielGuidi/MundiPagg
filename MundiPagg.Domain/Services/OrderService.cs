@@ -2,8 +2,7 @@
 using MundiPagg.Domain.CreateOrders.Entities.NewOrders;
 using MundiPagg.Domain.CreateOrders.Interfaces;
 using MundiPagg.Domain.Orders.Entities.Orders;
-using System;
-using System.Text.Json;
+using MundiPagg.Domain.Shared;
 
 namespace MundiPagg.Domain.CreateOrders.Services
 {
@@ -37,27 +36,29 @@ namespace MundiPagg.Domain.CreateOrders.Services
 
         public Order CreateNewOrder(NewOrder newOrder)
         {
-            var createOrderJson = TransformOrderToCreateOrderJson(newOrder);
+            var createOrderJson = JsonTransform.OrderToCreateOrder(newOrder);
 
             var order = SaveNewOrder(newOrder);
 
-            SendMessageByBroker(createOrderJson, order.JobId.ToString());
-
+            _orderBroker.SendOrderMessage(createOrderJson, order.JobId.ToString());
+            _logger.LogInformation($"Message send to broker.");
             return order;
         }
 
-        public void UpdateProcessedOrder(long id, Order order)
+        public Order UpdateProcessedOrder(long id, Order order)
         {
             var _order = _orderRepository.GetOrder(id);
             if (_order is null)
             {
                 _logger.LogError($"Could not update Order with JobId {id}: Order not found!");
-                return;
+                return null;
             }
 
             order.SetJobId(id);
             order.InternalId = _order.InternalId;
             _orderRepository.Update(order);
+
+            return order;
         }
 
         #region [Private methods]
@@ -72,25 +73,6 @@ namespace MundiPagg.Domain.CreateOrders.Services
             _logger.LogInformation($"Order {order.Code} create with JobId: {order.JobId}.");
 
             return order;
-        }
-
-        private void SendMessageByBroker(string json, string id)
-        {
-            if (string.IsNullOrWhiteSpace(json))
-                throw new ArgumentException("Json can not be null, empty or filler with white spaces!", "json");
-
-            _orderBroker.SendOrderMessage(json, id);
-            _logger.LogInformation($"Message send to broker.");
-        }
-
-        private string TransformOrderToCreateOrderJson(NewOrder order)
-        {
-            if (order == null)
-                throw new ArgumentException("Order can not be null!", "json");
-
-            var json = JsonSerializer.Serialize(order);
-
-            return json;
         }
         #endregion
     }

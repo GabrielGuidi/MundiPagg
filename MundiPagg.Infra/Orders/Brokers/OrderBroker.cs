@@ -19,6 +19,9 @@ namespace MundiPagg.Infra.Orders.Brokers
 
         public void SendOrderMessage(string json, string id)
         {
+            if (string.IsNullOrWhiteSpace(json))
+                throw new ArgumentException("Json can not be null, empty or filler with white spaces!", nameof(json));
+
             _messageBroker.SendMessage(json, exchange_order, routingKey_newOrder, exchange_order_response, id);
         }
     }

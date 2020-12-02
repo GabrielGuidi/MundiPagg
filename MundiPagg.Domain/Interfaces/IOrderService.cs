@@ -8,6 +8,6 @@ namespace MundiPagg.Domain.CreateOrders.Interfaces
         Order CreateNewOrder(NewOrder order);
         Order GetOrder(string code);
         Order GetOrder(long id);
-        void UpdateProcessedOrder(long id, Order order);
+        Order UpdateProcessedOrder(long id, Order order);
     }
 }

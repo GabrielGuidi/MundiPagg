@@ -32,12 +32,13 @@ namespace MundiPagg.Domain.CreateOrders.Entities.NewOrders
 
         public static explicit operator Order(NewOrder newOrder)
         {
-            return new Order
+            var items = newOrder.Items.Select(x => (Item)x).ToArray();
+            var customer = (Customer)newOrder.Customer;
+
+            return new Order(items, customer)
             {
                 Code = newOrder.Code,
                 Amount = newOrder.Payments.Sum(x => x.Amount),
-                Items = newOrder.Items.Select(x => (Item)x).ToArray(),
-                Customer = (Customer)newOrder.Customer,
                 Shipping = (Shipping)newOrder.Shipping,
                 Status = "Created",
                 CreatedAt = FormatOrder.ToStringDate(DateTime.Now),

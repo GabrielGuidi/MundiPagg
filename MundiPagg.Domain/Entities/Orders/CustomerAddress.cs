@@ -6,6 +6,10 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
 {
     public class CustomerAddress : Address
     {
+        public CustomerAddress(string zipCode, string city, string state, string country, string line1) : base(zipCode, city, state, country, line1)
+        {
+        }
+
         [JsonPropertyName("id")]
         public string Id { get; set; }
 

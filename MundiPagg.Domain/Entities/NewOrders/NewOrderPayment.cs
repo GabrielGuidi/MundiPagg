@@ -4,6 +4,11 @@ namespace MundiPagg.Domain.CreateOrders.Entities.NewOrders
 {
     public class NewOrderPayment
     {
+        public NewOrderPayment(long amount)
+        {
+            Amount = amount;
+        }
+
         [JsonPropertyName("amount")]
         public long Amount { get; set; }
 

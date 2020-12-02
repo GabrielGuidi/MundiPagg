@@ -31,16 +31,12 @@ namespace MundiPagg.AppService.Models
 
         public static explicit operator Address(Endereco endereco)
         {
-            var address = new Address()
+            var address = new Address(
+                endereco.Cep, endereco.Cidade, endereco.Estado.ToUpper(), 
+                ConvertToCountry(endereco.Pais), $"{endereco.Numero}, {endereco.Logradouro}, {endereco.Bairro}")
             {
-                City = endereco.Cidade,
-                Country = ConvertToCountry(endereco.Pais),
-                State = endereco.Estado.ToUpper(),
                 Line2 = endereco.Complemento
             };
-
-            address.SetZipCode(endereco.Cep);
-            address.SetLine1($"{endereco.Numero}, {endereco.Logradouro}, {endereco.Bairro}");
 
             return address;
         }

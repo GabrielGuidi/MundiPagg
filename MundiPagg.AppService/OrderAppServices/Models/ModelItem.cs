@@ -17,12 +17,11 @@ namespace MundiPagg.AppService.Models
 
         public static explicit operator NewOrderItem(ModelItem item)
         {
-            return new NewOrderItem()
-            {
-                Amount = FormatOrderData.ConvertToLong(item.ValorUnit),
-                Quantity = FormatOrderData.ConvertToLong(item.Quantidade),
-                Description = item.Produto
-            };
+            var amount = FormatOrderData.ConvertToLong(item.ValorUnit);
+            var quantity = FormatOrderData.ConvertToLong(item.Quantidade);
+            var description = item.Produto;
+
+            return new NewOrderItem(description, quantity, amount);
         }
     }
 }

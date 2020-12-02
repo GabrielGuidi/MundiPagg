@@ -5,6 +5,13 @@ namespace MundiPagg.Domain.CreateOrders.Entities.NewOrders
 {
     public class NewOrderShipping
     {
+        public NewOrderShipping(long amount, string description, Address address)
+        {
+            Amount = amount;
+            Description = description;
+            Address = address;
+        }
+
         [JsonPropertyName("amount")]
         public long Amount { get; set; }
 

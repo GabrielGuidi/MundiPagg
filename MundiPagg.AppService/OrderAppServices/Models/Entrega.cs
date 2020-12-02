@@ -18,12 +18,11 @@ namespace MundiPagg.AppService.Models
 
         public static explicit operator NewOrderShipping(Entrega entrega)
         {
-            return new NewOrderShipping()
-            {
-                Amount = FormatOrderData.ConvertToLong(entrega.Frete),
-                Description = entrega.ShippingCompany,
-                Address = (Address)entrega.EnderecoEntrega
-            };
+            var amount = FormatOrderData.ConvertToLong(entrega.Frete);
+            var description = entrega.ShippingCompany;
+            var address = (Address)entrega.EnderecoEntrega;
+
+            return new NewOrderShipping(amount, description, address);
         }
     }
 }

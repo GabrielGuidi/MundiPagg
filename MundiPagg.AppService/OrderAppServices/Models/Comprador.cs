@@ -34,13 +34,14 @@ namespace MundiPagg.AppService.Models
 
         public static explicit operator NewOrderCustomer(Comprador comprador)
         {
-            return new NewOrderCustomer()
+            var type = ConvertToTyoe(comprador.Tipo);
+            var birthdate = comprador.Aniversario;
+            var document = comprador.Documento;
+            var email = comprador.Email;
+
+            return new NewOrderCustomer(type, birthdate, document, email)
             {
-                Email = comprador.Email,
                 Name = comprador.Nome,
-                Type = ConvertToTyoe(comprador.Tipo),
-                Birthdate = comprador.Aniversario,
-                Document = comprador.Documento,
                 Phones = ConvertToPhones(comprador.Celular, comprador.Telefone),
                 Address = (Address)comprador.Endereco
             };
@@ -48,7 +49,7 @@ namespace MundiPagg.AppService.Models
 
         private static string ConvertToTyoe(string tipo)
         {
-            if (tipo== "pessoa_fisica")
+            if (tipo == "pessoa_fisica")
             {
                 return "individual";
             };

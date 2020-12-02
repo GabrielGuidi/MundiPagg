@@ -7,8 +7,10 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
 {
     public class Order
     {
-        public Order()
+        public Order(Item[] items, Customer customer)
         {
+            Items = items;
+            Customer = customer;
             Currency = "BRL";
             Closed = false;
         }
@@ -56,7 +58,7 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         [JsonPropertyName("charges")]
         public Charge[] Charges { get; set; }
 
-        internal void SetJobId(long id)
+        public void SetJobId(long id)
         {
             if (JobId > 0)
                 throw new ApplicationException("JobId can be set only once!");

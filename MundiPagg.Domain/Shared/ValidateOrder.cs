@@ -56,6 +56,9 @@ namespace MundiPagg.Domain.Shared
 
         internal static bool IsValidAddressStatus(string status)
         {
+            if (status == string.Empty)
+                return true;
+
             if (status == "active")
                 return true;
 

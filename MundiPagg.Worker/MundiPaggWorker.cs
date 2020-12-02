@@ -51,7 +51,6 @@ namespace MundiPagg.Worker
             try
             {
                 var message = Encoding.UTF8.GetString(body);
-
                 _logger.LogInformation($"Message related to JobId {props.CorrelationId} received from {ProcessedSuccessQueueName}.");
 
                 UpdateOrder(id, message);
@@ -70,15 +69,12 @@ namespace MundiPagg.Worker
             }
         }
 
-        protected virtual async Task OnFailEventReceived(object sender, BasicDeliverEventArgs @event)/*TODO to use or not to use*/ 
+        protected virtual async Task OnFailEventReceived(object sender, BasicDeliverEventArgs @event)
         {
-            var body = @event.Body.ToArray();
             var props = @event.BasicProperties;
 
             try
             {
-                var message = Encoding.UTF8.GetString(body);
-
                 _logger.LogError($"Message related to JobId {props.CorrelationId} received from {ProcessedFailQueueName}.");
             }
             catch (Exception ex)

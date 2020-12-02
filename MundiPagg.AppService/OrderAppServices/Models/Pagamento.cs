@@ -22,9 +22,9 @@ namespace MundiPagg.AppService.Models
 
         public static explicit operator NewOrderPayment(Pagamento pagamento)
         {
-            return new NewOrderPayment()
+            var amount = FormatOrderData.ConvertToLong(pagamento.Valor);
+            return new NewOrderPayment(amount)
             {
-                Amount = FormatOrderData.ConvertToLong(pagamento.Valor),
                 PaymentMethod = ConvertToPaymentMethod(pagamento),
                 CreditCard = (NewOrderCreditCard)pagamento
             };

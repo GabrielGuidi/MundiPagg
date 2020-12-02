@@ -8,6 +8,13 @@ namespace MundiPagg.Domain.CreateOrders.Entities.NewOrders
 {
     public class NewOrderItem
     {
+        public NewOrderItem(string description, long quantity, long amount)
+        {
+            Description = description;
+            Quantity = quantity;
+            Amount = amount;
+        }
+
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
