@@ -1,4 +1,4 @@
-## MundiPagg - Credit card payment simulator
+## MundiPagg - Simulador de pagamento com cartão de crédito. 
 
 #### Utilização
 Para executar o projeto, baixe o arquivo docker-compose.yml e, na pasta onde se localiza o arquivo, abra um terminal e rode o comando:
