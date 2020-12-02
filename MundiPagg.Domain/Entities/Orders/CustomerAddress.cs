@@ -6,6 +6,8 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
 {
     public class CustomerAddress : Address
     {
+        public CustomerAddress() {}
+
         public CustomerAddress(string zipCode, string city, string state, string country, string line1) : base(zipCode, city, state, country, line1)
         {
         }
@@ -14,13 +16,13 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public string Id { get; set; }
 
         [JsonPropertyName("status")]
-        public string Status { get; private set; }
+        public string Status { get; set; }
 
         [JsonPropertyName("created_at")]
-        public string CreatedAt { get; private set; }
+        public string CreatedAt { get; set; }
 
         [JsonPropertyName("updated_at")]
-        public string UpdatedAt { get; private set; }
+        public string UpdatedAt { get; set; }
 
         public void SetStatus(string status)
         {

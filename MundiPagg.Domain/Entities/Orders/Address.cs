@@ -6,6 +6,8 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
 {
     public class Address
     {
+        public Address() { }
+
         public Address(string zipCode, string city, string state, string country, string line1)
         {
             SetZipCode(zipCode);
@@ -17,7 +19,7 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         }
 
         [JsonPropertyName("zip_code")]
-        public string ZipCode { get; private set; }
+        public string ZipCode { get; set; }
 
         [JsonPropertyName("city")]
         public string City { get; set; }
@@ -29,7 +31,7 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public string Country { get; set; }
 
         [JsonPropertyName("line_1")]
-        public string Line1 { get; private set; }
+        public string Line1 { get; set; }
 
         [JsonPropertyName("line_2")]
         public string Line2 { get; set; }

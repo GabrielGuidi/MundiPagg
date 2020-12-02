@@ -19,7 +19,7 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public long PaidAmount { get; set; }
 
         [JsonPropertyName("status")]
-        public string Status { get; private set; }
+        public string Status { get; set; }
 
         [JsonPropertyName("currency")]
         public string Currency { get; set; }
@@ -28,13 +28,13 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public string PaymentMethod { get; set; }
 
         [JsonPropertyName("paid_at")]
-        public string PaidAt { get; private set; }
+        public string PaidAt { get; set; }
 
         [JsonPropertyName("created_at")]
-        public string CreatedAt { get; private set; }
+        public string CreatedAt { get; set; }
 
         [JsonPropertyName("updated_at")]
-        public string UpdatedAt { get; private set; }
+        public string UpdatedAt { get; set; }
 
         [JsonPropertyName("customer")]
         public Customer Customer { get; set; }

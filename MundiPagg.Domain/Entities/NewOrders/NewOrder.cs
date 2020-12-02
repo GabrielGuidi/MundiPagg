@@ -15,6 +15,10 @@ namespace MundiPagg.Domain.CreateOrders.Entities.NewOrders
             Payments = payments;
         }
 
+        public NewOrder()
+        {
+        }
+
         [JsonPropertyName("code")]
         public string Code { get; set; }
 

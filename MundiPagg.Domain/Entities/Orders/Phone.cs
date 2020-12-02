@@ -7,13 +7,13 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
     public class Phone
     {
         [JsonPropertyName("country_code")]
-        public string CountryCode { get; private set; }
+        public string CountryCode { get; set; }
 
         [JsonPropertyName("number")]
-        public string Number { get; private set; }
+        public string Number { get; set; }
 
         [JsonPropertyName("area_code")]
-        public string AreaCode { get; private set; }
+        public string AreaCode { get; set; }
 
         public void SetCountryCode(string countryCode)
         {

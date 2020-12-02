@@ -1,6 +1,5 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
-
 using MundiPagg.AppService.OrderApplicationServices;
 using MundiPagg.AppService.OrderApplicationServices.Interfaces;
 using MundiPagg.Domain.CreateOrders.Interfaces;
@@ -18,7 +16,6 @@ using MundiPagg.Infra.Orders.Brokers;
 using MundiPagg.Infra.Orders.Repositories;
 using MundiPagg.Infra.Shared;
 using MundiPagg.Infra.Shared.Interfaces;
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -58,9 +55,6 @@ namespace MundiPagg
                 var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var applicationName = PlatformServices.Default.Application.ApplicationName;
                 var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
-
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
                 if (File.Exists(xmlDocumentPath))
                 {

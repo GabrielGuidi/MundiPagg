@@ -30,7 +30,7 @@ namespace MundiPagg.Consumer
                     {
                         return new ConnectionFactory
                         {
-                            HostName = "rabbitmq",
+                            HostName = "localhost",
                             UserName = "rabbitmq",
                             Password = "rabbitmq",
                             VirtualHost = "/",

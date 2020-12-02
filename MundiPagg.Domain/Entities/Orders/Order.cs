@@ -7,6 +7,12 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
 {
     public class Order
     {
+        public Order()
+        {
+            Currency = "BRL";
+            Closed = false;
+        }
+
         public Order(Item[] items, Customer customer)
         {
             Items = items;
@@ -20,7 +26,7 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public ObjectId InternalId { get; set; }
 
         [JsonPropertyName("job_id")]
-        public long JobId { get; private set; }
+        public long JobId { get; set; }
 
         [JsonPropertyName("id")]
         public string OrderId { get; set; }

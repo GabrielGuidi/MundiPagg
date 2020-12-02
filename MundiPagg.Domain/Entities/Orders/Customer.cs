@@ -13,13 +13,13 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public string Name { get; set; }
 
         [JsonPropertyName("email")]
-        public string Email { get; private set; }
+        public string Email { get; set; }
 
         [JsonPropertyName("document")]
-        public string Document { get; private set; }
+        public string Document { get; set; }
 
         [JsonPropertyName("type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
 
         [JsonPropertyName("delinquent")]
         public bool? Delinquent { get; set; }
@@ -28,13 +28,13 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public CustomerAddress Address { get; set; }
 
         [JsonPropertyName("created_at")]
-        public string CreatedAt { get; private set; }
+        public string CreatedAt { get; set; }
 
         [JsonPropertyName("updated_at")]
-        public string UpdatedAt { get; private set; }
+        public string UpdatedAt { get; set; }
 
         [JsonPropertyName("birthdate")]
-        public string Birthdate { get; private set; }
+        public string Birthdate { get; set; }
 
         [JsonPropertyName("phones")]
         public Contacts Phones { get; set; }

@@ -22,13 +22,13 @@ namespace MundiPagg.Domain.Orders.Entities.Orders
         public long Quantity { get; set; }
 
         [JsonPropertyName("status")]
-        public string Status { get; private set; }
+        public string Status { get; set; }
 
         [JsonPropertyName("created_at")]
-        public string CreatedAt { get; private set; }
+        public string CreatedAt { get; set; }
 
         [JsonPropertyName("updated_at")]
-        public string UpdatedAt { get; private set; }
+        public string UpdatedAt { get; set; }
 
         public void SetStatus(string status)
         {
