@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY . ./MundiPagg
+COPY ./App ./MundiPagg
 WORKDIR "/src/MundiPagg"
 RUN dotnet restore "MundiPagg/MundiPagg.Api.csproj"
 RUN dotnet build "MundiPagg/MundiPagg.Api.csproj" -c Release -o /app/build

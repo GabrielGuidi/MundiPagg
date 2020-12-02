@@ -4,6 +4,8 @@
     mundiapp:
       container_name: mundipagg-app
       image: gabrielguidi/mundiapp
+      build:
+        context: .
       networks: 
         - mundi-net
       depends_on:
@@ -11,11 +13,15 @@
         - mongo
       restart: unless-stopped
       ports:
+        - 32771:443
         - 32770:80
 
     consumer:
       container_name: mundipagg-consumer
       image: gabrielguidi/mundipaggconsumer
+      build:
+        context: .
+        dockerfile: Dockerfile.consumer
       networks: 
         - mundi-net
       depends_on:
