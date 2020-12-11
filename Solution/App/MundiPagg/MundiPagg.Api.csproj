@@ -14,6 +14,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\RequestXML.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\RequestXML.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
@@ -24,6 +34,12 @@
     <ProjectReference Include="..\MundiPagg.AppService\MundiPagg.AppService.csproj" />
     <ProjectReference Include="..\MundiPagg.Infra\MundiPagg.Infra.csproj" />
     <ProjectReference Include="..\MundiPagg.Worker\MundiPagg.Worker.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Assets\RequestJson.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
