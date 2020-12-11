@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MundiPagg.AppService.DataTransfer;
 using MundiPagg.AppService.Models;
 using MundiPagg.AppService.OrderApplicationServices.Interfaces;
+using MundiPagg.AppService.OrderApplicationServices.ValueObjects;
 using System.IO;
 using System.Text.Json;
 
@@ -63,7 +64,7 @@ namespace MundiPagg.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(orderRequest.Order))
             {
-                orderRequest.Order = GetDefaultOrderJson();
+                orderRequest.Order = GetDefaultOrderJson(orderRequest.OrderContent);
             }
             else
             {
@@ -74,7 +75,7 @@ namespace MundiPagg.Api.Controllers
                 catch (System.Exception)
                 {
                     _logger.LogInformation($"Fail to deserialize!");
-                    orderRequest.Order = GetDefaultOrderJson();
+                    orderRequest.Order = GetDefaultOrderJson(orderRequest.OrderContent);
                 }
             }
 
@@ -84,9 +85,15 @@ namespace MundiPagg.Api.Controllers
         }
 
         #region [Private methods]
-        private string GetDefaultOrderJson()
+        private string GetDefaultOrderJson(OrderContentFormatEnum orderContent)
         {
-            using StreamReader fileReader = new StreamReader(".//Assets//RequestJson.json");
+            string patchDefault = ".//Assets//RequestJson.json";
+            const string patchXML = ".//Assets//RequestXML.xml";
+
+            if (orderContent == OrderContentFormatEnum.Xml)
+                patchDefault = patchXML;
+
+            using StreamReader fileReader = new StreamReader(patchDefault);
             _logger.LogInformation($"Using default Order json.");
             return fileReader.ReadToEnd();
         }

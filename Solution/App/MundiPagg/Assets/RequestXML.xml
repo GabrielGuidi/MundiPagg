@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <numero_pedido>OR1234</numero_pedido>
+  <comprador>
+    <aniversario>1991-05-20T00:00:00</aniversario>
+    <documento>12345678900</documento>
+    <email>fulano@gmail.com</email>
+    <telefone>552122225555</telefone>
+    <celular>5521999995555</celular>
+    <nome>Fulano Silva</nome>
+    <tipo>pessoa_fisica</tipo>
+    <endereco>
+      <cidade>Rio de Janeiro</cidade>
+      <complemento>Apto 1011</complemento>
+      <pais>Brazil</pais>
+      <bairro>Centro</bairro>
+      <numero>123</numero>
+      <estado>RJ</estado>
+      <logradouro>Rua Souza</logradouro>
+      <cep>23021130</cep>
+    </endereco>
+  </comprador>
+  <pagamento>
+    <valor>210</valor>
+    <parcelas>5</parcelas>
+    <endereco_cobranca>
+      <cidade>Rio de Janeiro</cidade>
+      <complemento>Apto 1011</complemento>
+      <pais>Brazil</pais>
+      <bairro>Centro</bairro>
+      <numero>123</numero>
+      <estado>RJ</estado>
+      <logradouro>Rua Souza</logradouro>
+      <cep>23021130</cep>
+    </endereco_cobranca>
+    <cartao>
+      <bandeira>Visa</bandeira>
+      <numero_cartao>4000000000000010</numero_cartao>
+      <mes_vencimento>10</mes_vencimento>
+      <ano_vencimento>2022</ano_vencimento>
+      <nome_cartao>FULANO SILVA</nome_cartao>
+      <cvv>321</cvv>
+    </cartao>
+  </pagamento>
+  <entrega>
+    <endereco_entrega>
+      <cidade>Rio de Janeiro</cidade>
+      <complemento>Apto 1011</complemento>
+      <pais>Brazil</pais>
+      <bairro>Centro</bairro>
+      <numero>123</numero>
+      <estado>RJ</estado>
+      <logradouro>Rua Souza</logradouro>
+      <cep>23021130</cep>
+    </endereco_entrega>
+    <frete>10</frete>
+    <shipping_company>Correios</shipping_company>
+  </entrega>
+  <carrinho>
+    <items>
+      <produto>Discos Vinil</produto>
+      <quantidade>10</quantidade>
+      <valor_unit>10</valor_unit>
+    </items>
+    <items>
+      <produto>Toca Vinil</produto>
+      <quantidade>1</quantidade>
+      <valor_unit>100</valor_unit>
+    </items>
+  </carrinho>
+</root>

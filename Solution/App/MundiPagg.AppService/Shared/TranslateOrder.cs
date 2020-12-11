@@ -1,44 +1,60 @@
 ﻿using EnumsNET;
 using MundiPagg.AppService.Models;
 using MundiPagg.AppService.OrderApplicationServices.ValueObjects;
+using MundiPagg.AppService.OrderAppServices.Models.XML;
+using MundiPagg.Domain.CreateOrders.Entities.NewOrders;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
+using System.Xml.Serialization;
 
 namespace MundiPagg.AppService.Shared
 {
     public class TranslateOrder
     {
-        private static Dictionary<OrderContentFormatEnum, Func<string, OrderModel>> _formats;
+        private static Dictionary<OrderContentFormatEnum, Func<string, NewOrder>> _formats;
 
         static TranslateOrder()
         {
             _formats = InstantiateFormatsDictonary();
         }
 
-        internal static OrderModel FromRequest(string order, OrderContentFormatEnum orderContent, SumulateCardValueEnum eventSimulate)
+        internal static NewOrder FromRequest(string order, OrderContentFormatEnum orderContent, SumulateCardValueEnum eventSimulate)
         {
-            var orderModel = _formats[orderContent](order);
+            var newOrder = _formats[orderContent](order);
             if (eventSimulate != SumulateCardValueEnum.Success)
-                orderModel.Pagamento.Cartao.NumeroCartao = SumulateCardValueEnum.Fail.AsString(EnumFormat.Description);
+                newOrder.Payments.FirstOrDefault().CreditCard.Card.Number = SumulateCardValueEnum.Fail.AsString(EnumFormat.Description);
 
-            return orderModel;
+            return newOrder;
         }
 
         #region [Private methods]
-        private static OrderModel TranslateOrderFromJson(string order)
+        private static NewOrder TranslateOrderFromJson(string order)
         {
-            return JsonSerializer.Deserialize<OrderModel>(order);
+            var orderModel = JsonSerializer.Deserialize<OrderModel>(order);
+            
+            return (NewOrder)orderModel;
         }
 
-        private static OrderModel TranslateOrderFromXml(string order)
+        private static NewOrder TranslateOrderFromXml(string order)
         {
-            throw new NotImplementedException("Not done yet!");
+            XmlSerializer serializer = new XmlSerializer(typeof(PedidoModelXml));
+
+            PedidoModelXml pedido;
+            using (Stream reader = new MemoryStream(Encoding.ASCII.GetBytes(order)))
+            {
+                pedido = (PedidoModelXml)serializer.Deserialize(reader);
+            }
+
+            return (NewOrder)pedido;
         }
 
-        public static Dictionary<OrderContentFormatEnum, Func<string, OrderModel>> InstantiateFormatsDictonary()
+        public static Dictionary<OrderContentFormatEnum, Func<string, NewOrder>> InstantiateFormatsDictonary()
         {
-            return new Dictionary<OrderContentFormatEnum, Func<string, OrderModel>>()
+            return new Dictionary<OrderContentFormatEnum, Func<string, NewOrder>>()
             {
                 { OrderContentFormatEnum.Json,  (x) => TranslateOrderFromJson(x)},
                 { OrderContentFormatEnum.Xml,  (x) => TranslateOrderFromXml(x)}

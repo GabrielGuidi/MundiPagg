@@ -28,14 +28,13 @@ namespace MundiPagg
                 {
                     return new ConnectionFactory
                     {
-                        HostName = "localhost",
+                        HostName = "rabbitmq",
                         UserName = "rabbitmq",
                         Password = "rabbitmq",
                         VirtualHost = "/",
                         DispatchConsumersAsync = true
                     };
                 });
-            })
-            ;
+            });
     }
 }

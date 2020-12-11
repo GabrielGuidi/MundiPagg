@@ -1,7 +1,6 @@
 ﻿using MundiPagg.AppService.DataTransfer;
 using MundiPagg.AppService.OrderApplicationServices.Interfaces;
 using MundiPagg.AppService.Shared;
-using MundiPagg.Domain.CreateOrders.Entities.NewOrders;
 using MundiPagg.Domain.CreateOrders.Interfaces;
 using MundiPagg.Domain.Orders.Entities.Orders;
 
@@ -38,9 +37,7 @@ namespace MundiPagg.AppService.OrderApplicationServices
 
         public OrderResponse CreateNewOrder(OrderRequest orderRequest)
         {
-            var orderModel = TranslateOrder.FromRequest(orderRequest.Order, orderRequest.OrderContent, orderRequest.EventSimulate);
-
-            var newOrder = (NewOrder)orderModel;
+            var newOrder = TranslateOrder.FromRequest(orderRequest.Order, orderRequest.OrderContent, orderRequest.EventSimulate);
 
             var order = _orderService.CreateNewOrder(newOrder);
 
